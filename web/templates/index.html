@@ -75,6 +75,7 @@
               xmlns:xlink="http://www.w3.org/1999/xlink"
               enable-background="new 0 0 512 512"
               class="recordSvg"
+              id="startRecordSvg"
             >
               <g>
                 <g>
@@ -87,6 +88,7 @@
                 </g>
               </g>
             </svg>
+            <div id="loader" style="display: none"></div>
           </button>
           <button class="button" id="stopRecord">
             <svg
@@ -213,6 +215,7 @@
 
     #startRecord {
       background-color: #006400 !important;
+      text-align: -webkit-center;
     }
     #startRecord:hover {
       background-color: #32cd32 !important;
@@ -255,12 +258,31 @@
       font-size: 24px;
       color: #4caf50;
       font-weight: bold;
-      margin-bottom: 0px;
+      margin: 0px;
     }
 
     #resultsContainer {
       max-width: 600px;
       margin: 200px;
+    }
+
+    #loader {
+      border: 12px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 12px solid #90ee90;
+      width: 72px;
+      height: 72px;
+      -webkit-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
   </style>
   <script>
@@ -301,6 +323,10 @@
         document.getElementById("startRecord").style.display = "unset";
         document.getElementById("stopRecord").style.display = "none";
 
+        document.getElementById("startRecordSvg").style.display = "none";
+        document.getElementById("startRecord").disabled = true;
+        document.getElementById("loader").style.display = "block";
+
         fetch("/stop_record", { method: "POST" })
           .then((response) => response.json())
           .then((data) => {
@@ -308,6 +334,12 @@
             const emotions = data.emotion;
             const listContainer = document.getElementById("emotionList");
             listContainer.innerHTML = "";
+
+            //
+
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("startRecordSvg").style.display = "unset";
+            document.getElementById("startRecord").disabled = false;
 
             if (Array.isArray(emotions)) {
               emotions.forEach((emotion) => {
