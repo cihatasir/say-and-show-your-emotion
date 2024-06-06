@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recognition</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body style="min-height: 100vh">
+    <div class="appWrapper">
+      <div class="left-section">
+        <h1 class="title">Face Recognition</h1>
+
+        <div class="cameraPart">
+          <div id="cameraWrapper" class="cameraWrapper">
+            <img id="camera" src="{{ url_for('video') }}" />
+
+            <div id="noCamera">
+              <div id="buttonsWrapper">
+                <button class="button" id="showCamera" onclick="showCamera()">
+                  <!-- Open Camera -->
+                  <svg
+                    fill="#FFFFFF"
+                    height="80px"
+                    version="1.1"
+                    id="Capa_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 74.207 74.207"
+                    xml:space="preserve"
+                  >
+                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+                    <g
+                      id="SVGRepo_tracerCarrier"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+
+                    <g id="SVGRepo_iconCarrier">
+                      <g>
+                        <path
+                          d="M57.746,14.658h-2.757l-1.021-3.363c-0.965-3.178-3.844-5.313-7.164-5.313H28.801c-3.321,0-6.201,2.135-7.165,5.313 l-1.021,3.363h-4.153C7.385,14.658,0,22.043,0,31.121v20.642c0,9.077,7.385,16.462,16.462,16.462h41.283 c9.077,0,16.462-7.385,16.462-16.462V31.121C74.208,22.043,66.823,14.658,57.746,14.658z M68.208,51.762 c0,5.769-4.693,10.462-10.462,10.462H16.462C10.693,62.223,6,57.53,6,51.762V31.121c0-5.769,4.693-10.462,10.462-10.462h8.603 l2.313-7.621c0.192-0.631,0.764-1.055,1.423-1.055h18.003c0.659,0,1.23,0.424,1.423,1.057l2.314,7.619h7.204 c5.769,0,10.462,4.693,10.462,10.462L68.208,51.762L68.208,51.762z"
+                        />
+                        <path
+                          d="M37.228,25.406c-8.844,0-16.04,7.195-16.04,16.04c0,8.844,7.195,16.039,16.04,16.039s16.041-7.195,16.041-16.039 C53.269,32.601,46.073,25.406,37.228,25.406z M37.228,51.486c-5.536,0-10.04-4.504-10.04-10.039c0-5.536,4.504-10.04,10.04-10.04 c5.537,0,10.041,4.504,10.041,10.04C47.269,46.982,42.765,51.486,37.228,51.486z"
+                        />
+                      </g>
+                    </g>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button id="hideCamera" onclick="hideCamera()">Kapat</button>
+      </div>
+      <div class="right-section">
+        <h1 class="title">Voice Recognition</h1>
+        <div class="rightSectionsButtons">
+          <button class="button" id="startRecord">
+            <svg
+              fill="#000000"
+              height="800px"
+              width="800px"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              enable-background="new 0 0 512 512"
+              class="recordSvg"
+            >
+              <g>
+                <g>
+                  <path
+                    d="m439.5,236c0-11.3-9.1-20.4-20.4-20.4s-20.4,9.1-20.4,20.4c0,70-64,126.9-142.7,126.9-78.7,0-142.7-56.9-142.7-126.9 0-11.3-9.1-20.4-20.4-20.4s-20.4,9.1-20.4,20.4c0,86.2 71.5,157.4 163.1,166.7v57.5h-23.6c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h88c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4h-23.6v-57.5c91.6-9.3 163.1-80.5 163.1-166.7z"
+                  />
+                  <path
+                    d="m256,323.5c51,0 92.3-41.3 92.3-92.3v-127.9c0-51-41.3-92.3-92.3-92.3s-92.3,41.3-92.3,92.3v127.9c0,51 41.3,92.3 92.3,92.3zm-52.3-220.2c0-28.8 23.5-52.3 52.3-52.3s52.3,23.5 52.3,52.3v127.9c0,28.8-23.5,52.3-52.3,52.3s-52.3-23.5-52.3-52.3v-127.9z"
+                  />
+                </g>
+              </g>
+            </svg>
+          </button>
+          <button class="button" id="stopRecord">
+            <svg
+              fill="#ffffff"
+              viewBox="0 0 56 56"
+              xmlns="http://www.w3.org/2000/svg"
+              stroke="#ffffff"
+              class="recordSvg"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="M 13.7851 49.5742 L 42.2382 49.5742 C 47.1366 49.5742 49.5743 47.1367 49.5743 42.3086 L 49.5743 13.6914 C 49.5743 8.8633 47.1366 6.4258 42.2382 6.4258 L 13.7851 6.4258 C 8.9101 6.4258 6.4257 8.8398 6.4257 13.6914 L 6.4257 42.3086 C 6.4257 47.1602 8.9101 49.5742 13.7851 49.5742 Z"
+                ></path>
+              </g>
+            </svg>
+          </button>
+        </div>
+        <div id="resultsContainer">
+          <h4 class="resultsTitle">Results</h4>
+          <ul id="emotionList"></ul>
+        </div>
+      </div>
+    </div>
+  </body>
+  <style>
+    .left-section,
+    .right-section {
+      width: 50%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+    }
+
+    .left-section {
+      left: 0;
+      background-color: #add8e6;
+    }
+
+    .right-section {
+      right: 0;
+      background-color: #90ee90;
+    }
+
+    .rightSectionsButtons {
+      transform: translateY(132px);
+    }
+
+    .appWrapper {
+      text-align: center !important;
+      padding: 30px;
+    }
+    .title {
+      font-family: "Open Sans", sans-serif;
+      font-size: 35px;
+      margin-bottom: 40px;
+    }
+    .cameraWrapper {
+      border: 1px solid transparent;
+      border-radius: 8px;
+      width: 80%;
+      box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.75);
+      height: 376px !important;
+      align-content: center;
+      transform: translateY(80px);
+    }
+    .cameraPart {
+      display: flex;
+      justify-content: center;
+    }
+    #noCamera {
+      display: block;
+    }
+    .button {
+      background-color: blue;
+      color: white;
+      border: transparent;
+      cursor: pointer;
+      margin-top: 25px;
+      height: 200px;
+      width: 200px;
+      font-size: 15px;
+      border-radius: 200px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    button:hover {
+      transform: scale(1.05);
+      transition: all 0.1s ease-in-out;
+    }
+    #camera {
+      display: none;
+      width: -webkit-fill-available;
+      border-radius: 8px;
+      height: 376px !important;
+      border: none;
+    }
+    #hideCamera {
+      display: none;
+      background-color: #ff0000;
+      color: white;
+      border: transparent;
+      cursor: pointer;
+      margin-top: 125px;
+      height: 40px;
+      width: 140px;
+      font-size: 15px;
+      border-radius: 8px;
+      align-items: center;
+      justify-content: center;
+    }
+    #buttonsWrapper {
+      display: grid;
+      justify-content: center;
+      grid-template-columns: repeat(3, auto);
+      gap: 10px;
+    }
+
+    #startRecord {
+      background-color: #006400 !important;
+    }
+    #startRecord:hover {
+      background-color: #32cd32 !important;
+    }
+    #stopRecord {
+      display: none;
+      background-color: #ff0000 !important;
+    }
+    #stopRecord:hover {
+      background-color: #b22222 !important;
+    }
+
+    .recordSvg {
+      fill: white;
+      height: 80px;
+      width: 80px;
+    }
+
+    #resultsContainer {
+      display: none;
+      background-color: #ffffff;
+      color: #000000;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      font-family: Arial, sans-serif;
+    }
+
+    #emotionList {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #emotionList li {
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .resultsTitle {
+      font-size: 24px;
+      color: #4caf50;
+      font-weight: bold;
+      margin-bottom: 0px;
+    }
+
+    #resultsContainer {
+      max-width: 600px;
+      margin: 200px;
+    }
+  </style>
+  <script>
+    function hideCamera() {
+      document.getElementById("camera").style.visibility = "hidden";
+      document.getElementById("showCamera").style.display = "unset";
+      document.getElementById("hideCamera").style.display = "none";
+      document.getElementById("noCamera").style.display = "block";
+      document.getElementById("camera").style.display = "none";
+    }
+
+    function showCamera() {
+      document.getElementById("camera").style.visibility = "visible";
+      document.getElementById("showCamera").style.display = "none";
+      document.getElementById("hideCamera").style.display = "unset";
+
+      document.getElementById("cameraWrapper").style.border = "none";
+      document.getElementById("noCamera").style.display = "none";
+      document.getElementById("camera").style.display = "block";
+    }
+  </script>
+
+  <script>
+    document
+      .getElementById("startRecord")
+      .addEventListener("click", function () {
+        document.getElementById("startRecord").style.display = "none";
+        document.getElementById("stopRecord").style.display = "unset";
+
+        fetch("/start_record", { method: "POST" })
+          .then((response) => response.json())
+          .then((data) => console.log(data.message));
+      });
+
+    document
+      .getElementById("stopRecord")
+      .addEventListener("click", function () {
+        document.getElementById("startRecord").style.display = "unset";
+        document.getElementById("stopRecord").style.display = "none";
+
+        fetch("/stop_record", { method: "POST" })
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("resultsContainer").style.display = "block";
+            const emotions = data.emotion;
+            const listContainer = document.getElementById("emotionList");
+            listContainer.innerHTML = "";
+
+            if (Array.isArray(emotions)) {
+              emotions.forEach((emotion) => {
+                const listItem = document.createElement("li");
+                listItem.textContent = `${emotion.name}: ${emotion.percentage}%`;
+                listContainer.appendChild(listItem);
+              });
+            } else {
+              console.error("Expected an array of emotions, got:", emotions);
+            }
+          });
+      });
+  </script>
+</html>
