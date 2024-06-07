@@ -67,22 +67,6 @@ def index():
 def video():
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-# @app.route('/predict', methods=['POST'])
-# def predict():
-#     duration = 2
-#     sample_rate = 44100
-
-#     print("Lütfen konuşun...")
-#     audio_data = sd.rec(int(duration * sample_rate), samplerate=sample_rate, channels=1, dtype='float64')
-#     sd.wait()
-#     sf.write('audio.wav', audio_data, sample_rate)
-
-#     emotion_result = analyze_emotion('audio.wav')
-#     print(emotion_result)
-#     os.remove('audio.wav')
-
-#     return jsonify('')
-
 audio_frames = []
 sample_rate = 44100
 stream = None
@@ -104,8 +88,8 @@ def stop_record():
     global stream, audio_frames
     if stream is not None:
         stream.stop()
-        stream.close()  # Stream'i kapat
-        stream = None  # Stream nesnesini sıfırla
+        stream.close()
+        stream = None
     audio_data = np.concatenate(audio_frames)
     output_path = 'output.wav'
     sf.write(output_path, audio_data, sample_rate)
